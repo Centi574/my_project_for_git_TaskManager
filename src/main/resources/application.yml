@@ -1,0 +1,32 @@
+server:
+  port: ${PORT:5000}
+
+base-url: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+rollbar_token: d13cf54f5e6046f98373e5f23b9a9a07
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:postgresql://localhost:5433/task
+
+  application:
+    name: app
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        hbm2ddl:
+          auto: create-drop
