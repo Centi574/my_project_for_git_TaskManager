@@ -18,10 +18,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("${base-url}" + LabelController.LABEL_CONTROLLER_PATH)
+@RequestMapping("/api/labels")
 public class LabelController {
-    public static final String LABEL_CONTROLLER_PATH = "/labels";
-    public static final String ID = "/{id}";
 
     private LabelService labelService;
 
@@ -49,7 +47,7 @@ public class LabelController {
                     content = {@Content(mediaType = "application/jsom",
                             schema = @Schema(implementation = Label.class))}),
             @ApiResponse(responseCode = "404", description = "No such label found", content = @Content)})
-    @GetMapping(path = ID)
+    @GetMapping("/{id}")
     public Label getLabelById(@PathVariable (name = "id") Long id) {
         return labelService.getLabelById(id);
     }
@@ -60,7 +58,7 @@ public class LabelController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Label.class))}),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content)})
-    @PutMapping(path = ID)
+    @PutMapping("/{id}")
     public Label updateLabelById(@PathVariable (name = "id") Long id, @RequestBody @Valid LabelDto labelDto) {
         return labelService.updateLabelById(id, labelDto);
     }
@@ -69,7 +67,7 @@ public class LabelController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Label has been successfully deleted"),
             @ApiResponse(responseCode = "404", description = "No such label found")})
-    @DeleteMapping(path = ID)
+    @DeleteMapping("/{id}")
     public void deleteLabelById(@PathVariable (name = "id") Long id) {
         labelService.deleteLabelById(id);
     }
