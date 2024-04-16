@@ -1,6 +1,7 @@
 package com.example.project_hex_one.service;
 
 import com.example.project_hex_one.dto.TaskStatusDto;
+import com.example.project_hex_one.exception.TaskStatusNotFoundException;
 import com.example.project_hex_one.model.TaskStatus;
 import com.example.project_hex_one.repository.TaskRepository;
 import com.example.project_hex_one.repository.TaskStatusRepository;
@@ -23,13 +24,13 @@ public class TaskStatusService {
 
     @Transactional
     public TaskStatus updateTaskStatus(Long id, TaskStatusDto taskStatusDto) {
-        TaskStatus taskStatus = taskStatusRepository.findById(id).orElseThrow();
+        TaskStatus taskStatus = taskStatusRepository.findById(id).orElseThrow(() -> new TaskStatusNotFoundException("Task Status not found"));
         taskStatus.setName(taskStatusDto.getName());
         return taskStatus;
     }
 
     @Transactional
     public TaskStatus getTaskStatusById(Long id) {
-        return taskStatusRepository.findById(id).orElseThrow();
+        return taskStatusRepository.findById(id).orElseThrow(() -> new TaskStatusNotFoundException("Task Status not found"));
     }
 }
