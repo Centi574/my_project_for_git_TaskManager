@@ -24,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
 
+    private static final String OWNER = "@userRepository.findById(#id).get().getEmail() == authentication.getName()";
 
     @Operation(summary = "Create new user")
     @ApiResponse(responseCode = "201", description = "User successfully created")
@@ -56,6 +57,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "The user is not found"),
             @ApiResponse(responseCode = "403", description = "Forbidden to update"),
             @ApiResponse(responseCode = "422", description = "Invalid request")})
+    @PreAuthorize(OWNER)
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable(name = "id") Long id, @RequestBody @Valid UserDto userDto) {
         return ResponseEntity.ok(userDto);
@@ -67,6 +69,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "The user is not found"),
             @ApiResponse(responseCode = "403", description = "Forbidden to delete"),
             @ApiResponse(responseCode = "422", description = "Data integrity violation")})
+    @PreAuthorize(OWNER)
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteUser(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(id);
