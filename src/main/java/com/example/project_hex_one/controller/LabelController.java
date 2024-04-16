@@ -25,8 +25,7 @@ public class LabelController {
 
     @Operation(summary = "Create new label")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "The label has been successfully created",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Label.class))})})
+            @ApiResponse(responseCode = "201", description = "The label has been successfully created")})
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public Label createNewLabel(@RequestBody @Valid LabelDto labelDto) {
@@ -43,23 +42,19 @@ public class LabelController {
 
     @Operation(summary = "Get label by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "The label is found",
-                    content = {@Content(mediaType = "application/jsom",
-                            schema = @Schema(implementation = Label.class))}),
+            @ApiResponse(responseCode = "200", description = "The label is found"),
             @ApiResponse(responseCode = "404", description = "No such label found", content = @Content)})
     @GetMapping("/{id}")
-    public Label getLabelById(@PathVariable (name = "id") Long id) {
+    public Label getLabelById(@PathVariable(name = "id") Long id) {
         return labelService.getLabelById(id);
     }
 
     @Operation(summary = "Update the label by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "The label is updated",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Label.class))}),
+            @ApiResponse(responseCode = "200", description = "The label is updated"),
             @ApiResponse(responseCode = "422", description = "Invalid request", content = @Content)})
     @PutMapping("/{id}")
-    public Label updateLabelById(@PathVariable (name = "id") Long id, @RequestBody @Valid LabelDto labelDto) {
+    public Label updateLabelById(@PathVariable(name = "id") Long id, @RequestBody @Valid LabelDto labelDto) {
         return labelService.updateLabelById(id, labelDto);
     }
 
@@ -68,7 +63,7 @@ public class LabelController {
             @ApiResponse(responseCode = "200", description = "Label has been successfully deleted"),
             @ApiResponse(responseCode = "404", description = "No such label found")})
     @DeleteMapping("/{id}")
-    public void deleteLabelById(@PathVariable (name = "id") Long id) {
+    public void deleteLabelById(@PathVariable(name = "id") Long id) {
         labelService.deleteLabelById(id);
     }
 }

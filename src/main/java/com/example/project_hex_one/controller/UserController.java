@@ -4,7 +4,6 @@ import com.example.project_hex_one.dto.UserDto;
 import com.example.project_hex_one.model.User;
 import com.example.project_hex_one.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -50,8 +49,7 @@ public class UserController {
 
     @Operation(summary = "Update the user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "The user is updated",
-                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", description = "The user is updated"),
             @ApiResponse(responseCode = "404", description = "The user is not found"),
             @ApiResponse(responseCode = "403", description = "Forbidden to update"),
             @ApiResponse(responseCode = "422", description = "Invalid request")})
