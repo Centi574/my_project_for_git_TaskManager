@@ -1,6 +1,7 @@
 package com.example.project_hex_one.service;
 
 import com.example.project_hex_one.dto.TaskDto;
+import com.example.project_hex_one.exception.TaskNotFoundException;
 import com.example.project_hex_one.model.Label;
 import com.example.project_hex_one.model.Task;
 import com.example.project_hex_one.model.TaskStatus;
