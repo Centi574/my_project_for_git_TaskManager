@@ -5,6 +5,7 @@ import com.example.project_hex_one.exception.UserNotFoundException;
 import com.example.project_hex_one.model.User;
 import com.example.project_hex_one.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,5 +50,10 @@ public class UserService {
     @Transactional
     public void deleteById(long id) {
         userRepository.deleteById(id);
+    }
+
+    public User getCurrentUser() {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(name).orElseThrow(() -> new UserNotFoundException("No such User Exception"));
     }
 }
