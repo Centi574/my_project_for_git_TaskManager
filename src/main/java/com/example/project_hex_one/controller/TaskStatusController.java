@@ -25,29 +25,52 @@ public class TaskStatusController {
     private final TaskStatusService taskStatusService;
     private final TaskStatusRepository taskStatusRepository;
 
+    @Operation(summary = "Create new task status")
+    @ApiResponse(responseCode = "201", description = "New task status successfully created",
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = TaskStatus.class))})
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public TaskStatus createNewTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto) {
         return taskStatusService.createNewTaskStatus(taskStatusDto);
     }
 
+    @Operation(summary = "Get all task statuses")
+    @ApiResponse(responseCode = "200", description = "All task statuses are found",
+            content = @Content(schema = @Schema(implementation = TaskStatus.class)))
     @GetMapping()
     public List<TaskStatus> getAllTaskStatus() {
         return taskStatusRepository.findAll().stream().toList();
     }
 
+    @Operation(summary = "Get task status by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The task status is found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TaskStatus.class))}),
+            @ApiResponse(responseCode = "404", description = "No such task status found", content = @Content)})
     @GetMapping(path = ID)
     public TaskStatus getTaskStatusById(@PathVariable(name = "id") Long id) {
         return taskStatusService.getTaskStatusById(id);
     }
 
+    @Operation(summary = "Update the task status by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The task status has been successfully updated",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TaskStatus.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content)})
     @PutMapping(path = ID)
     public TaskStatus updateTaskStatus(@PathVariable(name = "id") Long id,
                                        @RequestBody @Valid TaskStatusDto taskStatusDto) {
         return taskStatusService.updateTaskStatus(id, taskStatusDto);
     }
 
+    @Operation(summary = "Delete the task status by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Task status has been deleted"),
+            @ApiResponse(responseCode = "404", description = "No such task status found")})
     @DeleteMapping(path = ID)
-    public void deleteTaskStatus(@PathVariable(name = "id") Long id) {
+    public void deleteTaskStatus(@PathVariable (name = "id") Long id) {
         taskStatusRepository.deleteById(id);
     }
 }
